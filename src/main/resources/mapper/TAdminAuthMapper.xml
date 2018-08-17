@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytao.per.dao.TAdminAuthMapper">
+
+	<resultMap id="BASE-RESULT" type="com.ytao.per.bean.TAdminAuth">
+		<result property="id" column="id" />
+		<result property="authName" column="auth_name" />
+		<result property="authUrl" column="auth_url" />
+		<result property="description" column="description" />
+		<result property="moduleId" column="module_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<delete id="deleteById">
+		DELETE FROM t_admin_auth WHERE id = #{id}
+	</delete>
+	
+	<select id="selectById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_admin_auth
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="selectCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			t_admin_auth
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="authName!=null">
+  				AND auth_name = #{authName}
+  			</if>
+  			<if test="authUrl!=null">
+  				AND auth_url = #{authUrl}
+  			</if>
+  			<if test="description!=null">
+  				AND description = #{description}
+  			</if>
+  			<if test="moduleId!=null">
+  				AND module_id = #{moduleId}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="updateTime!=null">
+  				AND update_time = #{updateTime}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_admin_auth
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.authName!=null">
+  				AND auth_name = #{param.authName}
+  			</if>
+  			<if test="param.authUrl!=null">
+  				AND auth_url = #{param.authUrl}
+  			</if>
+  			<if test="param.description!=null">
+  				AND description = #{param.description}
+  			</if>
+  			<if test="param.moduleId!=null">
+  				AND module_id = #{param.moduleId}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.updateTime!=null">
+  				AND update_time = #{param.updateTime}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.ytao.per.bean.TAdminAuth">
+  		INSERT INTO t_admin_auth ( 
+			`id`,`auth_name`,`auth_url`,`description`,`module_id`,`create_time`,`update_time`			
+  		) VALUES (
+			#{id},#{authName},#{authUrl},#{description},#{moduleId},#{createTime},#{updateTime}			
+  		)
+  	</insert>
+
+	<select id="listUserAuth" resultMap="BASE-RESULT">
+		SELECT t2.* FROM t_role_auth t1 ]
+		LEFT JOIN t_admin_auth t2 on t1.auth_id=t2.id
+		LEFT JOIN t_user_role t3 t1.role_id=t3.role_id
+		WHERE t3.user_id=#{userId}
+	</select>
+  	 
+   	<update id="update" parameterType="com.ytao.per.bean.TAdminAuth">
+   		update t_admin_auth
+   		<set>
+   		            <if test="id!=null">
+                id = #{id},
+            </if>
+                    <if test="authName!=null">
+                auth_name = #{authName},
+            </if>
+                    <if test="authUrl!=null">
+                auth_url = #{authUrl},
+            </if>
+                    <if test="description!=null">
+                description = #{description},
+            </if>
+                    <if test="moduleId!=null">
+                module_id = #{moduleId},
+            </if>
+                    <if test="createTime!=null">
+                create_time = #{createTime},
+            </if>
+                    <if test="updateTime!=null">
+                update_time = #{updateTime},
+            </if>
+                </set>
+        where
+        id = #{id}
+   	</update>
+</mapper>

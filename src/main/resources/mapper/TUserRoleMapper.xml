@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytao.per.dao.TUserRoleMapper">
+
+	<resultMap id="BASE-RESULT" type="com.ytao.per.bean.TUserRole">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="roleId" column="role_id" />
+	</resultMap>
+	
+	<delete id="deleteById">
+		DELETE FROM t_user_role WHERE id = #{id}
+	</delete>
+	
+	<select id="selectById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_user_role
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="selectCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			t_user_role
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="userId!=null">
+  				AND user_id = #{userId}
+  			</if>
+  			<if test="roleId!=null">
+  				AND role_id = #{roleId}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_user_role
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.userId!=null">
+  				AND user_id = #{param.userId}
+  			</if>
+  			<if test="param.roleId!=null">
+  				AND role_id = #{param.roleId}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.ytao.per.bean.TUserRole">
+  		INSERT INTO t_user_role ( 
+			`id`,`user_id`,`role_id`			
+  		) VALUES (
+			#{id},#{userId},#{roleId}			
+  		)
+  	</insert>
+
+	<delete id="deleteUserRoleByUserId">
+		DELETE FROM t_user_role where user_id=#{userId}
+	</delete>
+  	 
+   	<update id="update" parameterType="com.ytao.per.bean.TUserRole">
+   		update t_user_role
+   		<set>
+   		            <if test="id!=null">
+                id = #{id},
+            </if>
+                    <if test="userId!=null">
+                user_id = #{userId},
+            </if>
+                    <if test="roleId!=null">
+                role_id = #{roleId},
+            </if>
+                </set>
+        where
+        id = #{id}
+   	</update>
+</mapper>

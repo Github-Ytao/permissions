@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytao.per.dao.TAdminUserMapper">
+
+	<resultMap id="BASE-RESULT" type="com.ytao.per.bean.TAdminUser">
+		<result property="id" column="id" />
+		<result property="deptId" column="dept_id" />
+		<result property="roleId" column="role_id" />
+		<result property="loginName" column="login_name" />
+		<result property="password" column="password" />
+		<result property="username" column="username" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="createTime" column="create_time" />
+		<result property="loginTime" column="login_time" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="count" column="count" />
+		<result property="status" column="status" />
+	</resultMap>
+	
+	<delete id="deleteById">
+		DELETE FROM t_admin_user WHERE id = #{id}
+	</delete>
+	
+	<select id="selectById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_admin_user
+		WHERE
+			id = #{id}
+	</select>
+
+	<select id="selectByUsername" resultMap="BASE-RESULT">
+		SELECT
+		*
+		FROM
+		t_admin_user
+		WHERE
+		username = #{username}
+	</select>
+	
+	<select id="selectCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			t_admin_user
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="deptId!=null">
+  				AND dept_id = #{deptId}
+  			</if>
+  			<if test="roleId!=null">
+  				AND role_id = #{roleId}
+  			</if>
+  			<if test="loginName!=null">
+  				AND login_name = #{loginName}
+  			</if>
+  			<if test="password!=null">
+  				AND password = #{password}
+  			</if>
+  			<if test="username!=null">
+  				AND username = #{username}
+  			</if>
+  			<if test="mobile!=null">
+  				AND mobile = #{mobile}
+  			</if>
+  			<if test="email!=null">
+  				AND email = #{email}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="loginTime!=null">
+  				AND login_time = #{loginTime}
+  			</if>
+  			<if test="lastLoginTime!=null">
+  				AND last_login_time = #{lastLoginTime}
+  			</if>
+  			<if test="count!=null">
+  				AND count = #{count}
+  			</if>
+  			<if test="status!=null">
+  				AND status = #{status}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_admin_user
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.deptId!=null">
+  				AND dept_id = #{param.deptId}
+  			</if>
+  			<if test="param.roleId!=null">
+  				AND role_id = #{param.roleId}
+  			</if>
+  			<if test="param.loginName!=null">
+  				AND login_name = #{param.loginName}
+  			</if>
+  			<if test="param.password!=null">
+  				AND password = #{param.password}
+  			</if>
+  			<if test="param.username!=null">
+  				AND username = #{param.username}
+  			</if>
+  			<if test="param.mobile!=null">
+  				AND mobile = #{param.mobile}
+  			</if>
+  			<if test="param.email!=null">
+  				AND email = #{param.email}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.loginTime!=null">
+  				AND login_time = #{param.loginTime}
+  			</if>
+  			<if test="param.lastLoginTime!=null">
+  				AND last_login_time = #{param.lastLoginTime}
+  			</if>
+  			<if test="param.count!=null">
+  				AND count = #{param.count}
+  			</if>
+  			<if test="param.status!=null">
+  				AND status = #{param.status}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.ytao.per.bean.TAdminUser">
+  		INSERT INTO t_admin_user ( 
+			`id`,`dept_id`,`role_id`,`login_name`,`password`,`username`,`mobile`,`email`,`create_time`,`login_time`,`last_login_time`,`count`,`status`			
+  		) VALUES (
+			#{id},#{deptId},#{roleId},#{loginName},#{password},#{username},#{mobile},#{email},#{createTime},#{loginTime},#{lastLoginTime},#{count},#{status}			
+  		)
+  	</insert>
+  	 
+   	<update id="update" parameterType="com.ytao.per.bean.TAdminUser">
+   		update t_admin_user
+   		<set>
+   		            <if test="id!=null">
+                id = #{id},
+            </if>
+                    <if test="deptId!=null">
+                dept_id = #{deptId},
+            </if>
+                    <if test="roleId!=null">
+                role_id = #{roleId},
+            </if>
+                    <if test="loginName!=null">
+                login_name = #{loginName},
+            </if>
+                    <if test="password!=null">
+                password = #{password},
+            </if>
+                    <if test="username!=null">
+                username = #{username},
+            </if>
+                    <if test="mobile!=null">
+                mobile = #{mobile},
+            </if>
+                    <if test="email!=null">
+                email = #{email},
+            </if>
+                    <if test="createTime!=null">
+                create_time = #{createTime},
+            </if>
+                    <if test="loginTime!=null">
+                login_time = #{loginTime},
+            </if>
+                    <if test="lastLoginTime!=null">
+                last_login_time = #{lastLoginTime},
+            </if>
+                    <if test="count!=null">
+                count = #{count},
+            </if>
+                    <if test="status!=null">
+                status = #{status},
+            </if>
+                </set>
+        where
+        id = #{id}
+   	</update>
+</mapper>

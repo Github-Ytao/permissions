@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytao.per.dao.TAdminRoleMapper">
+
+	<resultMap id="BASE-RESULT" type="com.ytao.per.bean.TAdminRole">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="authId" column="auth_id" />
+		<result property="moduleId" column="module_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="description" column="description" />
+	</resultMap>
+	
+	<delete id="deleteById">
+		DELETE FROM t_admin_role WHERE id = #{id}
+	</delete>
+	
+	<select id="selectById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_admin_role
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="selectCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			t_admin_role
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="name!=null">
+  				AND name = #{name}
+  			</if>
+  			<if test="authId!=null">
+  				AND auth_id = #{authId}
+  			</if>
+  			<if test="moduleId!=null">
+  				AND module_id = #{moduleId}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="updateTime!=null">
+  				AND update_time = #{updateTime}
+  			</if>
+  			<if test="description!=null">
+  				AND description = #{description}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_admin_role
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.name!=null">
+  				AND name = #{param.name}
+  			</if>
+  			<if test="param.authId!=null">
+  				AND auth_id = #{param.authId}
+  			</if>
+  			<if test="param.moduleId!=null">
+  				AND module_id = #{param.moduleId}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.updateTime!=null">
+  				AND update_time = #{param.updateTime}
+  			</if>
+  			<if test="param.description!=null">
+  				AND description = #{param.description}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.ytao.per.bean.TAdminRole">
+  		INSERT INTO t_admin_role ( 
+			`id`,`name`,`auth_id`,`module_id`,`create_time`,`update_time`,`description`			
+  		) VALUES (
+			#{id},#{name},#{authId},#{moduleId},#{createTime},#{updateTime},#{description}			
+  		)
+  	</insert>
+  	 
+   	<update id="update" parameterType="com.ytao.per.bean.TAdminRole">
+   		update t_admin_role
+   		<set>
+   		            <if test="id!=null">
+                id = #{id},
+            </if>
+                    <if test="name!=null">
+                name = #{name},
+            </if>
+                    <if test="authId!=null">
+                auth_id = #{authId},
+            </if>
+                    <if test="moduleId!=null">
+                module_id = #{moduleId},
+            </if>
+                    <if test="createTime!=null">
+                create_time = #{createTime},
+            </if>
+                    <if test="updateTime!=null">
+                update_time = #{updateTime},
+            </if>
+                    <if test="description!=null">
+                description = #{description},
+            </if>
+                </set>
+        where
+        id = #{id}
+   	</update>
+</mapper>

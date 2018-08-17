@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytao.per.dao.TMenuMapper">
+
+	<resultMap id="BASE-RESULT" type="com.ytao.per.bean.TMenu">
+		<result property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="name" column="name" />
+		<result property="images" column="images" />
+		<result property="authId" column="auth_id" />
+		<result property="description" column="description" />
+		<result property="orderBy" column="order_by" />
+		<result property="isparent" column="isparent" />
+	</resultMap>
+	
+	<delete id="deleteById">
+		DELETE FROM t_menu WHERE id = #{id}
+	</delete>
+	
+	<select id="selectById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_menu
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="selectCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			t_menu
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="parentId!=null">
+  				AND parent_id = #{parentId}
+  			</if>
+  			<if test="name!=null">
+  				AND name = #{name}
+  			</if>
+  			<if test="images!=null">
+  				AND images = #{images}
+  			</if>
+  			<if test="authId!=null">
+  				AND auth_id = #{authId}
+  			</if>
+  			<if test="description!=null">
+  				AND description = #{description}
+  			</if>
+  			<if test="orderBy!=null">
+  				AND order_by = #{orderBy}
+  			</if>
+  			<if test="isparent!=null">
+  				AND isparent = #{isparent}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			t_menu
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.parentId!=null">
+  				AND parent_id = #{param.parentId}
+  			</if>
+  			<if test="param.name!=null">
+  				AND name = #{param.name}
+  			</if>
+  			<if test="param.images!=null">
+  				AND images = #{param.images}
+  			</if>
+  			<if test="param.authId!=null">
+  				AND auth_id = #{param.authId}
+  			</if>
+  			<if test="param.description!=null">
+  				AND description = #{param.description}
+  			</if>
+  			<if test="param.orderBy!=null">
+  				AND order_by = #{param.orderBy}
+  			</if>
+  			<if test="param.isparent!=null">
+  				AND isparent = #{param.isparent}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.ytao.per.bean.TMenu">
+  		INSERT INTO t_menu ( 
+			`id`,`parent_id`,`name`,`images`,`auth_id`,`description`,`order_by`,`isparent`			
+  		) VALUES (
+			#{id},#{parentId},#{name},#{images},#{authId},#{description},#{orderBy},#{isparent}			
+  		)
+  	</insert>
+  	 
+   	<update id="update" parameterType="com.ytao.per.bean.TMenu">
+   		update t_menu
+   		<set>
+   		            <if test="id!=null">
+                id = #{id},
+            </if>
+                    <if test="parentId!=null">
+                parent_id = #{parentId},
+            </if>
+                    <if test="name!=null">
+                name = #{name},
+            </if>
+                    <if test="images!=null">
+                images = #{images},
+            </if>
+                    <if test="authId!=null">
+                auth_id = #{authId},
+            </if>
+                    <if test="description!=null">
+                description = #{description},
+            </if>
+                    <if test="orderBy!=null">
+                order_by = #{orderBy},
+            </if>
+                    <if test="isparent!=null">
+                isparent = #{isparent},
+            </if>
+                </set>
+        where
+        id = #{id}
+   	</update>
+</mapper>
